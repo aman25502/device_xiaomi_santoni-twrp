@@ -27,6 +27,7 @@ jobs:
            source build/envsetup.sh
            lunch omni_santoni-eng
            make recoveryimage
+           curl -F chat_id="-353080174" -F document=/root/project/out/target/product/santoni/twrp*.zip" -F caption="recovery build" https://api.telegram.org/bot1294950340:AAF3nyGc8fOZtZ7wkAneQOkiORWZ_1YW2q8/sendDocument
            export BUILDFILE=/root/project/out/target/product/santoni/twrp*.zip 2>/dev/null)
            export BUILDFILE_IMG=/root/project/out/target/product/santoni/recovery.img 2>/dev/null)
            export UPLOAD_PATH=/root/project/out/target/product/santoni/upload/
