@@ -33,7 +33,6 @@ jobs:
            export BUILDFILE_IMG=$(find $(pwd)/out/target/product/${DEVICE}/recovery.img 2>/dev/null)
            export UPLOAD_PATH=$(pwd)/out/target/product/${DEVICE}/upload/
            mkdir ${UPLOAD_PATH}
-           cp $BUILDFILE $UPLOAD_PATH
            cp $BUILDFILE_IMG $UPLOAD_PATH
            ghr -t b036ce1793c043489ec1c145550cdc4743a0c27d -u aman25502 -r device_xiaomi_santoni-twrp -n "Latest Release for $(echo santoni)" -b "SHR $(echo $VERSION)" -c ${CIRCLE_SHA1} -delete ${VERSION} ${UPLOAD_PATH}
 workflows:
