@@ -27,7 +27,7 @@ jobs:
            source build/envsetup.sh
            lunch omni_santoni-eng
            make recoveryimage
-           export BUILDFILE=$(find $(pwd)/out/target/product/santoni/TWRP*.zip 2>/dev/null)
+           export BUILDFILE=$(find $(pwd)/out/target/product/santoni/twrp*.zip 2>/dev/null)
            export BUILDFILE_IMG=$(find $(pwd)/out/target/product/santoni/recovery.img 2>/dev/null)
            export UPLOAD_PATH=$(pwd)/out/target/product/santoni/upload/
            mkdir ${UPLOAD_PATH}
