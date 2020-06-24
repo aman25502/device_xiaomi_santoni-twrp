@@ -1,0 +1,41 @@
+version: 2.1
+jobs:
+  compile:
+   docker:
+      - image: ubuntu:18.04
+   environment:
+      GIT_EMAIL: soniataran79@gmail.com
+      GIT_NAME: aman25502
+      VERSION: 2.2
+   steps:
+      - run:
+          command: |
+           apt-get -y update && apt-get -y upgrade && apt-get -y install bc bison build-essential curl flex g++-multilib gcc gcc-multilib clang git gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libsdl1.2-dev libwxgtk3.0-dev libxml2 libxml2-utils lzop pngcrush schedtool squashfs-tools xsltproc zip zlib1g-dev unzip openjdk-8-jdk python ccache libtinfo5 repo libstdc++6 wget libssl-dev rsync golang-go
+           mkdir -p ~/bin
+           curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+           chmod a+x ~/bin/repo
+           go get -u github.com/tcnksm/ghr
+           export PATH=/root/go/bin:$PATH
+           git config --global user.email "soniataran79@gmail.com"
+           git config --global user.name "aman25502"
+           git config --global color.ui false
+           repo init --depth=1 -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-9.0
+           repo sync
+           git clone https://github.com/aman25502/device_xiaomi_santoni-twrp -b android-9.0 device/xiaomi/santoni
+           export ALLOW_MISSING_DEPENDENCIES=true
+           export LC_ALL=C
+           source build/envsetup.sh
+           lunch omni_santoni-eng
+           make recoveryimage
+           export BUILDFILE=$(find $(pwd)/out/target/product/santoni/TWRP*.zip 2>/dev/null)
+           export BUILDFILE_IMG=$(find $(pwd)/out/target/product/santoni/recovery.img 2>/dev/null)
+           export UPLOAD_PATH=$(pwd)/out/target/product/santoni/upload/
+           mkdir ${UPLOAD_PATH}
+           cp $BUILDFILE $UPLOAD_PATH
+           cp $BUILDFILE_IMG $UPLOAD_PATH
+           ghr -t b036ce1793c043489ec1c145550cdc4743a0c27d -u aman25502 -r device_xiaomi_santoni-twrp -n "Latest Release for $(echo santoni)" -b "SHR $(echo $VERSION)" -c ${CIRCLE_SHA1} -delete ${VERSION} ${UPLOAD_PATH}
+workflows:
+  version: 2.1
+  cooking:
+    jobs:
+      - compile
