@@ -23,7 +23,7 @@ jobs:
            git config --global user.email "${GIT_EMAIL}"
            git config --global user.name "{GIT_NAME}"
            git config --global color.ui false
-           repo init --depth=1 -u git://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-9.0
+           repo init --depth=1 -u git://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-10.0
            repo sync
            git clone https://github.com/aman25502/device_xiaomi_santoni-twrp -b ci-pb device/${VENDOR}/${DEVICE}
            curl -s -X POST https://api.telegram.org/bot1294950340:AAF3nyGc8fOZtZ7wkAneQOkiORWZ_1YW2q8/sendMessage -d text="pb build started" -d chat_id=-1001349965943
