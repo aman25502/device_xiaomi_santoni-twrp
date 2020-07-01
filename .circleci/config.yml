@@ -7,7 +7,6 @@ jobs:
       GIT_EMAIL: soniataran79@gmail.com
       GIT_NAME: aman25502
       VERSION: 3.4.1
-      TWRP_MANIFEST: twrp-9.0
       VENDOR: xiaomi
       DEVICE: santoni
    steps:
@@ -24,10 +23,10 @@ jobs:
            git config --global user.email "${GIT_EMAIL}"
            git config --global user.name "{GIT_NAME}"
            git config --global color.ui false
-           repo init --depth=1 -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b ${TWRP_MANIFEST}
-           repo sync -j$(nproc --all) --force-sync --no-tags --no-clone-bundle --prune --optimized-fetch
-           git clone https://github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME} -b ${CIRCLE_BRANCH} device/${VENDOR}/${DEVICE}
-           curl -s -X POST https://api.telegram.org/bot1294950340:AAF3nyGc8fOZtZ7wkAneQOkiORWZ_1YW2q8/sendMessage -d text="Twrp build started" -d chat_id=-1001349965943
+           $ repo init --depth=1 -u git://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-9.0
+           repo sync
+           git clone https://github.com/aman25502/device_xiaomi_santoni-twrp -b ci-pb device/${VENDOR}/${DEVICE}
+           curl -s -X POST https://api.telegram.org/bot1294950340:AAF3nyGc8fOZtZ7wkAneQOkiORWZ_1YW2q8/sendMessage -d text="pb build started" -d chat_id=-1001349965943
            export ALLOW_MISSING_DEPENDENCIES=true
            export LC_ALL=C
            source build/envsetup.sh
