@@ -38,7 +38,7 @@ jobs:
            mkdir ${UPLOAD_PATH}
            cp $BUILDFILE_IMG release/
            cd out/target/product/santoni
-           curl -F chat_id="-1001349965943" -F document=@recovery.img -F caption="twrp-3.4.0-santoni" https://api.telegram.org/bot1294950340:AAF3nyGc8fOZtZ7wkAneQOkiORWZ_1YW2q8/sendDocument
+           curl -F chat_id="-1001349965943" -F document=@recovery.img -F caption="Pterodon-santoni" https://api.telegram.org/bot1294950340:AAF3nyGc8fOZtZ7wkAneQOkiORWZ_1YW2q8/sendDocument
 workflows:
   version: 2.1
   cooking:
