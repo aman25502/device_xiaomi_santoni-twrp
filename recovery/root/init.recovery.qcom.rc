@@ -26,28 +26,25 @@
 #
 
 on fs
-    # Needed to make qseecomd work in recovery
-    chmod 0777 /dev/qseecom
-    chmod 0664 /dev/ion
-    chown system system /dev/ion
-
-    # symlink
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
-
+    export ANDROID_ROOT /system_root
+    chmod 0664 /dev/ion
+    chown system system /dev/ion
+    install_keyring
+	
 on init
     export LD_CONFIG_FILE /etc/ld.config.txt
 
-on property:ro.crypto.state=encrypted
-    start sbinqseecomd
+    # Workaround for setting AVB version
+    setprop ro.boot.avb_version 1.0
+    setprop ro.boot.vbmeta.avb_version ${ro.boot.avb_version}
 
-# Separate copy needed to use /sbin/linker64 instead of /system/bin/linker64
-service ldconfigtxt /sbin/touch /etc/ld.config.txt
-    oneshot
-    seclabel u:r:recovery:s0
+on boot
+    setprop sys.usb.config adb
 
-service sbinqseecomd /sbin/qseecomd
-    disabled
-    user root
-    group root
-    seclabel u:r:recovery:s0
+on property:ro.build.version.release_orig=*
+    setprop ro.build.version.release ${ro.build.version.release_orig}
+
+on property:ro.build.version.security_patch_orig=*
+    setprop ro.build.version.security_patch ${ro.build.version.security_patch_orig}
