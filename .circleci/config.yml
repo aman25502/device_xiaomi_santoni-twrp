@@ -7,7 +7,7 @@ jobs:
       GIT_EMAIL: soniataran79@gmail.com
       GIT_NAME: aman25502
       VERSION: 3.4.1
-      TWRP_MANIFEST: twrp-9.0
+      TWRP_MANIFEST: twrp-9.0.1
       VENDOR: xiaomi
       DEVICE: santoni
    steps:
